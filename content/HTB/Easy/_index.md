@@ -64,7 +64,14 @@ Continue to **[Analytics](/htb/easy/analytics-htb/)**
 
 {{% details title="Delivery" closed="true" %}}
 
-CREATE AND INSERT EXCERPT FOR DELIVERY MACCHINE
+{{< figure
+  src="/assets/images/HTB/Delivery/Delivery-Logo.png"
+  link="/htb/easy/delivery-htb/"
+  height= 400
+  width= 400
+>}}
+
+This Hack The Box machine details a penetration testing journey, starting with initial access gained by exploiting a misconfigured Mattermost server through a ticket registration system. The write-up then covers leveraging exposed credentials found within the Mattermost chat to access a MySQL database, followed by extracting and cracking password hashes using Hashcat to achieve full root compromise.
 
 Continue to **[Delivery](/htb/easy/delivery-htb/)**
 ##### Hands On!

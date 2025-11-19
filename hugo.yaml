@@ -68,4 +68,9 @@ params:
     displayTitle: true
     displayLogo: false
 
+  theme:
+    #  | dark | system
+    default: light
+    displayToggle: true
+
 enableInlineShortcodes: true

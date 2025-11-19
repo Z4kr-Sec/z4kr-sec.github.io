@@ -18,16 +18,8 @@ I am an ethical hacker with a deep interest in penetration testing and red teami
 ---
 
 
-##  Follow me 
+## Certifications & Achievements
 
-- {{< icon "gitu" >}} - https://github.com/Z4kr-Sec/
-- {{< icon "linkedin" >}} - [Ricardo Morales Solorzano.](https://www.linkedin.com/in/ricardo-andres-morales-solorzano-491b26191/)
-- {{< icon "HTB-icon" >}} - https://app.hackthebox.com/users/319664
-
-
-## Hack The Box (HTB)
-
-## Certifications.
 ### Certified Penetration Tester Specialist (CPTS)
 - Check the certificate on ***[Credly](https://www.credly.com/badges/9b18e445-f8f0-4a09-96b3-8ce80c469440/public_url).***
 
@@ -36,18 +28,23 @@ I am an ethical hacker with a deep interest in penetration testing and red teami
 
 
 
-## Pro Labs.
-- Hack The Box - Zephyr Pro Lab
-    - ***Completed on:*** Sept 2023
+### Hack The Box - Zephyr Pro Lab
+- ***Completed on:*** Sept 2023
 
 ![zephyr](/assets/images/Cert&labs/Zephyr.png)
 
 
-- Hack The Box - Dante Pro Lab 
-    - ***Completed on:*** Sept 2022
+### Hack The Box - Dante Pro Lab 
+- ***Completed on:*** Sept 2022
 
 ![Dante](/assets/images/Cert&labs/Dante.png)
 
-## Contact 
-- email: z4rkseccontact@gmail.com
-- Discord : w1nz4c4r#0200
+---
+
+## Connect with Me
+
+- {{< icon "gitu" >}} - https://github.com/Z4kr-Sec/
+- {{< icon "linkedin" >}} - [Ricardo Morales Solorzano.](https://www.linkedin.com/in/ricardo-andres-morales-solorzano-491b26191/)
+- {{< icon "HTB-icon" >}} - https://app.hackthebox.com/users/319664
+- {{< icon "email" >}} - z4rkseccontact@gmail.com
+- {{< icon "discord" >}} - w1nz4c4r#0200

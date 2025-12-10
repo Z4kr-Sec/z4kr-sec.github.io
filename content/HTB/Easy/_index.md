@@ -49,7 +49,7 @@ Continue to **[Sea](/htb/easy/sea-htb/)**
 
 
 
-This machine focuses on exploiting a vulnerable instance of *Metabase* to gain initial access. with the help of the exploit - CVE-2023-38646, we obtain command execution on the target. The next phase involves navigating a Docker container environment, leveraging exposed credentials, and transitioning to an SSH session with user-level access. Finally, the privilege escalation is achieved by exploiting a known vulnerability (CVE-2023-2640) in the operating system to gain root access.
+This Easy-rated Linux machine on Hack The Box focuses on exploiting a vulnerable instance of *Metabase* to gain initial access. With the help of the exploit - CVE-2023-38646, we obtain command execution on the target. The next phase involves navigating a Docker container environment, leveraging exposed credentials, and transitioning to an SSH session with user-level access. Finally, the privilege escalation is achieved by exploiting a known vulnerability (CVE-2023-2640) in the operating system to gain root access.
 
 Continue to **[Analytics](/htb/easy/analytics-htb/)**
 
@@ -57,10 +57,6 @@ Continue to **[Analytics](/htb/easy/analytics-htb/)**
 {{< icon "HTB-icon" >}}  Turn on the machine on **[Hack The Box.](https://app.hackthebox.com/machines/569)**
 
 {{% /details %}}
-
-
-
-
 
 {{% details title="Delivery" closed="true" %}}
 
@@ -71,7 +67,7 @@ Continue to **[Analytics](/htb/easy/analytics-htb/)**
   width= 400
 >}}
 
-This Hack The Box machine details a penetration testing journey, starting with initial access gained by exploiting a misconfigured Mattermost server through a ticket registration system. The write-up then covers leveraging exposed credentials found within the Mattermost chat to access a MySQL database, followed by extracting and cracking password hashes using Hashcat to achieve full root compromise.
+This Easy-rated Linux machine details a penetration testing journey, starting with initial access gained by exploiting a misconfigured Mattermost server through a ticket registration system. The write-up then covers leveraging exposed credentials found within the Mattermost chat to access a MySQL database, followed by extracting and cracking password hashes using Hashcat to achieve full root compromise.
 
 Continue to **[Delivery](/htb/easy/delivery-htb/)**
 ##### Hands On!

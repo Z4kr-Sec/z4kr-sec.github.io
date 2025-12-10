@@ -7,7 +7,7 @@ draft: false
 {{< figure
   src="/assets/images/HTB/hard.jpg"
   height= 200
-  width= 400 
+  width=400
 >}}
 
 {{< callout type="warning" >}}

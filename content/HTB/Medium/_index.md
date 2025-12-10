@@ -2,7 +2,7 @@
 title: "Medium"
 date: 2025-04-27T23:09:51-04:00
 weight: 2
-draft: false 
+draft: false
 ---
 {{< figure
   src="/assets/images/HTB/medium.jpg"
@@ -17,19 +17,14 @@ draft: false
 
 {{< figure
   src="/assets/images/HTB/Administrator/Administrator-LOGO.png"
-  link="/HTB/medium/administrator/"
+  link="/htb/medium/administrator/"
   height= 400
   width= 400
 >}}
 
+This Medium-rated Windows machine on Hack The Box focuses on the exploitation of Active Directory weaknesses. The path begins with using Bloodhound to map the domain, identifying exploitable `GenericAll` permissions that allow for a password reset. The investigation then uncovers an FTP server with a PasswordSafe file. Cracking this file provides credentials to exploit ForceChangePassword privileges and perform a Kerberoast attack, leading to a full `DCSync` via Impacket for domain dominance.
 
-This Hack The Box Administrator machine is focused on exploitation of Active Directory weaknesses. Starting with user credentials, we used Bloodhound to map the domain, quickly identifying exploitable `GenericAll` permissions that allowed us to reset passwords using tools like `net rpc`.
-
-Our investigation then uncovered an FTP server with a PasswordSafe file. Cracking this file with `pwsafe2john` and John the Ripper provided further credentials, which we leveraged to exploit ForceChangePassword privileges and perform a targeted Kerberoast for even higher access. The final step involved a `DCSync` attack via Impacket, retrieving domain admin hashes and granting complete control. This showcases a direct path from initial access to domain dominance by chaining AD misconfigurations and service vulnerabilities.
-
-
-
-Continue to **[Administrator](/HTB/medium/administrator/)**
+Continue to **[Administrator](/htb/medium/administrator/)**
 
 ##### Hands On!
 {{< icon "HTB-icon" >}} Turn on the machine on **[Hack The Box.](https://app.hackthebox.com/machines/634)**
@@ -38,20 +33,19 @@ Continue to **[Administrator](/HTB/medium/administrator/)**
 
 ## 2024
 
-{{% details title="Survellance" closed="true" %}}
+{{% details title="Surveillance" closed="true" %}}
 
 
 {{< figure
-  src="/assets/images/HTB/survellance/Surveillance-LOGO.png"
-  link="/HTB/medium/survellance-htb/"
+  src="/assets/images/HTB/surveillance/Surveillance-LOGO.png"
+  link="/htb/medium/surveillance-htb/"
   height= 400
   width= 400
 >}}
 
+Surveillance is a Medium-rated Linux machine on Hack The Box that starts with exploiting a vulnerability in the website's CMS for initial access. Enumeration reveals a database file containing an encrypted password, which, once cracked, grants access to a ZoneMinder instance. By exploiting a known vulnerability in ZoneMinder, access is elevated to the `zoneminder` user. The final step involves leveraging sudo privileges to achieve full root access.
 
-Survellance is a medium machine of Hack The Box (HTB), the machine  begins with identifying a CMS vulnerability on the webpage hosted on port 80, which grants initial access to the system. Through enumeration, I uncovered a database file containing an encrypted password. Cracking this password allows me to access a ZoneMinder instance running on localhost. By exploiting a known vulnerability in ZoneMinder, I elevate my access to the 'zoneminder' user. The final step involves leveraging sudo privileges to achieve full root access.
-
-Continue to **[Survellance](/HTB/medium/survellance-htb/)**
+Continue to **[Surveillance](/htb/medium/surveillance-htb/)**
 
 ##### Hands On!
 {{< icon "HTB-icon" >}} Turn on the machine on **[Hack The Box.](https://app.hackthebox.com/machines/580)**

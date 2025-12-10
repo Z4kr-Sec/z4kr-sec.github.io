@@ -8,11 +8,11 @@ toc: true
 
 ## Ricardo Morales Solorzano. 
 
-Hello, I'm Z4kr, a passionate computer enthusiast with a lifelong curiosity about how computers work. From an early age, I’ve been fascinated by the intricacies of technology, which eventually led me to the world of cybersecurity. Around 4 years ago, I began my journey into hacking through the Hack The Box platform, and since then, I’ve been fortunate to explore a vast range of topics within the field of cybersecurity.
+I'm Z4kr, a cybersecurity professional driven by a lifelong curiosity for the intricacies of technology. This fascination naturally evolved into a focus on cybersecurity, and for the past four years, I've actively honed my skills on platforms like Hack The Box, delving deep into a wide array of offensive and defensive security topics.
 
-During my university days, I participated in multiple Google coding contests, which further solidified my passion for problem-solving and programming. Over time, I expanded my skills through platforms like PortSwigger.net, Hack The Box Academy, and VulnLab.
+My passion for problem-solving was further ignited during university, where I competed in multiple Google coding contests that sharpened my algorithmic and programming skills. I then channeled this analytical mindset into cybersecurity, systematically advancing my expertise through specialized training on platforms like PortSwigger.net, Hack The Box Academy, and VulnLab.
 
-I am an ethical hacker with a deep interest in penetration testing and red teaming. The goal of this page is to create a space where I can share my knowledge, insights, and techniques in this incredible world of cybersecurity. The primary focus will be on write-ups for retired Hack The Box machines, my personal projects, and proof-of-concept demonstrations.
+As an ethical hacker specializing in penetration testing and red teaming, I created this blog to share actionable knowledge with the cybersecurity community. Here, you will find detailed write-ups of retired Hack The Box machines, deep dives into personal projects, and practical proof-of-concept demonstrations.
 
 
 ---

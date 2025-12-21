@@ -12,6 +12,25 @@ draft: false
 
 ## 2025
 
+{{% details title="Heal" closed="true" %}}
+
+
+{{< figure
+  src="/assets/images/HTB/Heal/Heal-LOGO.png"
+  link="/htb/medium/heal-htb/"
+  height= 400
+  width= 400
+>}}
+
+Heal is a Medium-rated Linux machine on Hack The Box that challenges us to exploit a web API and leverage misconfigurations in internal services. The initial foothold involves identifying an LFI vulnerability within a resume builder application, which leads to leaking the database of a LimeSurvey instance. After cracking the administrator password, we exploit an authenticated RCE (CVE-2021-44967) to gain a shell. Lateral movement is achieved by finding credentials in configuration files, and root privileges are obtained by exploiting a misconfigured Consul service using CVE-2021-41805.
+
+Continue to **[Heal](/htb/medium/heal-htb/)**
+
+##### Hands On!
+{{< icon "HTB-icon" >}} Turn on the machine on **[Hack The Box.](https://app.hackthebox.com/machines/Heal)**
+
+{{% /details %}}
+
 {{% details title="Administrator" closed="true" %}}
 
 

@@ -24,6 +24,16 @@ I'm thrilled to open up my vault of hacking knowledge. Here, you'll discover com
 ## Latest Content. 
 
 {{< cards >}}
+{{< card
+        link="/htb/medium/heal-htb/"
+        title="Heal - HTB."
+        image="/assets/images/HTB/Heal/Heal-LOGO.png"
+        method="resize"
+        tag="Medium"
+        tagType="warning"
+        imageStyle="object-fit:cover;"
+        subtitle="Heal is a Medium-rated Linux machine on Hack The Box that challenges us to exploit a web API and leverage misconfigurations in internal services..."
+  >}}
 
 {{< card
       link="/pentest-notes/enumeration/"

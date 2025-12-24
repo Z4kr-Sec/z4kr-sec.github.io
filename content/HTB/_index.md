@@ -17,6 +17,24 @@ draft: false
 
 ## 2025
 
+{{% details title="Editor" closed="true" %}}
+
+{{< figure
+  src="/assets/images/HTB/Editor/Editor-LOGO.png"
+  link="/htb/easy/editor-htb/"
+  height= 400
+  width= 400
+>}}
+
+Editor is a Linux machine on Hack The Box that highlights the dangers of unpatched *wiki software* and insecure configurations in monitoring tools. The journey starts with identifying a Critical RCE in XWiki (**CVE-2025-24893**) caused by improper input sanitization in Groovy macros. After gaining a foothold, I found database credentials in a configuration file, which allowed for lateral movement to a user via password reuse. Finally, root privileges were obtained by exploiting a vulnerability in the *Netdata agent* (**CVE-2024-32019**) through PATH manipulation.
+
+Continue to **[Editor](/htb/easy/editor-htb/)**
+
+##### Hands On!
+{{< icon "HTB-icon" >}}  Turn on the machine on **[Hack The Box.](https://app.hackthebox.com/machines/Editor)**
+
+{{% /details %}}
+
 {{% details title="Heal" closed="true" %}}
 
 

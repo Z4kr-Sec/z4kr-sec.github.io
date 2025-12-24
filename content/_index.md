@@ -25,6 +25,16 @@ I'm thrilled to open up my vault of hacking knowledge. Here, you'll discover com
 
 {{< cards >}}
 {{< card
+        link="/htb/easy/editor-htb/"
+        title="Editor - HTB."
+        image="/assets/images/HTB/Editor/Editor-LOGO.png"
+        method="resize"
+        tag="Easy"
+        tagType="info"
+        imageStyle="object-fit:cover;"
+        subtitle="Editor is a Linux machine on Hack The Box that highlights the dangers of unpatched *wiki software* and insecure configurations in monitoring tools..."
+  >}}
+{{< card
         link="/htb/medium/heal-htb/"
         title="Heal - HTB."
         image="/assets/images/HTB/Heal/Heal-LOGO.png"
